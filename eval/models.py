@@ -10,6 +10,7 @@ class Tipo(models.Model):
 
 class Pregunta(models.Model):
     texto = models.CharField(max_length=50, null=False, blank= False)
+    puntaje = models.PositiveSmallIntegerField(null=False, blank=False)
     id_tipo = models.ForeignKey(Tipo, on_delete= models.CASCADE)
     id_cuestionario = models.ForeignKey(Cuestionario, on_delete=models.CASCADE)
 

@@ -18,6 +18,6 @@ from django.urls import path, include
 from eval import views
 
 urlpatterns = [
-    path('eval/', include('eval.urls')),
+    path('', include('eval.urls')),
     path('admin/', admin.site.urls),
 ]
