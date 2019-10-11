@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link rel="stylesheet" type="text/css" href={% static "../static/css/bootstrap.min.css" %}>
-		<script src={% static '../static/js/bootstrap.min.js' %}></script>
-		<script src={ % static '../static/js/jquery.min.js' %}></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href={% static "../static/css/bootstrap.min.css" %}>
+	<script src={% static '../static/js/bootstrap.min.js' %}></script>
+	<script src={ % static '../static/js/jquery.min.js' %}></script>
 </head>
 <body>
 		<!------ Include the above in your HEAD tag ---------->
@@ -18,7 +18,7 @@
 					</div>	
 					<form method="post">
 							{% csrf_token %}
-						<h3>Registrar Cuestionario</h3>
+						<h3>Editar Cuestionario</h3>
 					   <div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
@@ -26,7 +26,7 @@
 											{{ form.titulo}}
 								</div>
 								<div class="form-group">
-									<input type="submit" name="btnSubmit" class="btnContact" value="Registrar" />
+									<input type="submit" name="btnSubmit" class="btnContact" value="Editar" />
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -36,8 +36,7 @@
 								</div>
 							</div>
 						</div>
-					</form>
-				
+					</form>			
 		</div>
 		{% endblock %}
 </body>
