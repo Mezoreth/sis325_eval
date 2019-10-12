@@ -35,19 +35,6 @@ class eliminar_cuestionarios(DeleteView):
     form_class = cuestionario_form
     success_url = reverse_lazy('cuestionario_l')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class crear_pregunta(CreateView):
     form_class = pregunta_form
     template_name = 'pregunta_crear.html'
