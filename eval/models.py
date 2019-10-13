@@ -13,7 +13,7 @@ class Cuestionario(models.Model):
 class Pregunta(models.Model):
     texto = models.CharField(max_length=50, null=False, blank= False)
     tipos =(('Falso y Verdadero','Falso y Verdadero'),('multiple opcion 1 respuesta','Multiple Opcion 1 Respuetsa'),('multiple opcion multiple respuesta','Multiple Opcion Multiple Respuesta'))
-    tipo = models.CharField(max_length=15, null=False, blank=False)
+    tipo = models.CharField( max_length=45,choices=tipos, null=False, blank=False)
 
 class Respuesta(models.Model):
     texto = models.CharField(max_length=50, null=False, blank= False)
@@ -23,5 +23,4 @@ class Respuesta(models.Model):
 class Pregunta_de_Cuestionario(models.Model):
     puntaje = models.PositiveSmallIntegerField(null= False, blank= False)
     id_pregunta = models.ForeignKey(Pregunta, on_delete= models.CASCADE)
-    id_cuestionario = models.ForeignKey(Cuestionario, on_delete=models.CASCADE)
-
+    id_cuestionario = models.ForeignKey(Cuestionario, on_delete=models.CASCADE,)
