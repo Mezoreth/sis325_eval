@@ -23,8 +23,7 @@ class respuesta_form(ModelForm):
         fields = ['texto','correcto']
         widgets = {
             'texto':forms.TextInput(attrs={'class':'form-control'}),
-            'correcto':forms.TextInput(attrs={'class':'form-control'}),
-            'id_pregunta':forms.TextInput(attrs={'class':'form-control'}),
+            'correcto':forms.CheckboxInput(attrs={'class':'form-control'}),
         }
 
 class pregunta_cuestionario_form(ModelForm):

@@ -27,18 +27,16 @@ class editar_cuestionarios(UpdateView):
     template_name='cuestionario_editar.html'
     success_url = reverse_lazy('cuestionario_l')
 
-#class ver_cuestionarios(DetailView):
-    #queryset = Pregunta_de_Cuestionario.objects.select_related('id_cuestionario').select_related('id_pregunta')
-    #template_name='cuestionario_ver.html'
-
 class ver_cuestionarios(DetailView):
     model = Pregunta_de_Cuestionario
     template_name='cuestionario_ver.html'
     
     def get_context_data(self, **kwargs):
+        pk = self.kwargs.get('pk')
         context= super(ver_cuestionarios, self).get_context_data(**kwargs)
-        context['cuestionario']=Pregunta_de_Cuestionario.objects.filter(id_cuestionario=2).first()
-        context['preguntas']= Pregunta_de_Cuestionario.objects.select_related('id_cuestionario').filter(id_cuestionario=3)
+        context['cuestionario']=Pregunta_de_Cuestionario.objects.filter(id_cuestionario=pk).first()
+        context['preguntas']= Pregunta_de_Cuestionario.objects.select_related('id_cuestionario').filter(id_cuestionario=pk)
+        context['respuestas']= Respuesta.objects.all()
         return context
     
 class eliminar_cuestionarios(DeleteView):
@@ -64,11 +62,37 @@ class editar_preguntas(UpdateView):
     template_name='pregunta_editar.html'
     success_url = reverse_lazy('pregunta_l')
 
+class eliminar_preguntas(DeleteView):
+    model = Pregunta
+    success_url= reverse_lazy('pregunta_l')
+
 #####################################################    Respuesta
 
 class crear_respuestas(CreateView):
-    form_class = respuesta_form
-    template_name = 'pregunta_crear.html'
+    model = Respuesta
+    fields = ['texto', 'correcto']
+    template_name = 'respuesta_crear.html'
+    success_url = reverse_lazy('pregunta_l')
+    def get_context_data(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        self.fk = pk
+        context= super(crear_respuestas,self).get_context_data(**kwargs)
+        context['pregunta']=Pregunta.objects.filter(pk=pk).first()
+        context['respuesta']=Respuesta.objects.filter(pk=pk).first()
+        return context
+    def form_valid(self, form, **kwargs):
+        fk=self.kwargs.get('pk')
+        form.instance.id_pregunta = Pregunta.objects.filter(pk=fk).first()
+        return super(crear_respuestas, self).form_valid(form)
+
+class editar_respuestas(UpdateView):
+    model = Respuesta
+    fields = ['texto','correcto']
+    template_name = 'respuesta_editar.html'
+
+class eliminar_respuestas(DeleteView):
+    model = Respuesta
+    success_url = reverse_lazy('respuesta_l')
 
 
 

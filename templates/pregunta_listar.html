@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href={% static "../static/css/bootstrap.min.css" %}>
-    <script src={% static '../static/js/bootstrap.min.js' %}></script>
-    <script src={ % static '../static/js/jquery.min.js' %}></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+		<script src="../static/js/jquery.min.js"></script>
     <title>Lista de Cuestionarios</title>  
 </head>
 <body>
@@ -19,7 +19,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Pregunta</th>
                     <th scope="col">Respuesta</th>
-                    <th scope="col">Acciones</th>               
+                    <th scope="col">Acciones</th>           
                   </tr>
                 </thead>
                 <tbody>
@@ -28,7 +28,7 @@
                     <th scope="row">#</th>
                     <td>{{ pre.texto }}</td>
                     <td>{{ pre.tipo}}</td>
-                    <td><a class="btn btn-info" href="{% url 'pregunta_e' pre.id  %}">Editar</a><a class="btn btn-danger" href="">Eliminar</a></td>
+                    <td><a class="btn btn-info" href="{% url 'respuesta_n' pre.pk %}">Respuestas</a><a class="btn btn-info" href="{% url 'pregunta_e' pre.pk  %}">Editar</a><a class="btn btn-danger" href="">Eliminar</a></td>
                     <td></td>
                   </tr>
                   {% empty %}
