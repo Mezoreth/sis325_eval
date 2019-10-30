@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block menu %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Cuestionarios Web</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);">volver Atras</a>
+					  </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock menu %}
+{% block contenido %}
+<br>
+<br>
+<br>
+<section class="bg-light page-section" id="preguntas">
+<div class="row">
+    <div class="col-lg-12 text-center">
+      <h2 class="section-heading text-uppercase">Añadir del Banco de Preguntas Preguntas</h2>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+
+  <div class="row">
+      <div class="col-2"></div>
+      <div class="col-7">
+          <label class="list-group-item list-group-item-info">Preguntas</label>
+      </div>
+  </div>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <div class="list-group" id="list-tab" role="tablist">
+        
+        {% for pre in object_list %}
+        <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#a{{pre.id}}" role="tab" aria-controls="home">{{ pre.pregunta }}<a class="btn btn-success" href="{{cuestionario_id}}/{{pre.id}}">Añadir</a></a>
+        {% empty %}
+        <h1> No hay Preguntas Registradas</h1>
+        {% endfor %}
+ 
+      </div>
+    </div>
+    
+    <div class="col-4">
+      <div class="tab-content" id="nav-tabContent">
+
+        {% for pre in object_list %}
+        <div class="tab-pane fade" id="a{{pre.id}}" role="tabpanel" aria-labelledby="list-home-list"> {{ pre.id_materia.nombre }} </div>
+        {% empty %}
+        <h1> </h1>
+        {% endfor %} 
+    
+      </div>
+    </div>
+    
+  </div>
+</section>
+{% endblock contenido %}

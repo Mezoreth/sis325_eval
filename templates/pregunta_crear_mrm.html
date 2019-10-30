@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block contenido %}
+<section class="bg-light page-section" id="team">
+    <div class="container contact-form">
+            <br>
+            <br>  
+<form method="POST">
+        {% csrf_token %}
+        
+        <p>Pregunta : {{ form.pregunta }}</p>
+        <p>Tipo : {{ form.tipo }}</p>
+        <p>Materia : {{ form.id_materia }}</p>
+        
+        <br><br><br>
+        {{ inlines.management_form }}
+        
+        {% for formset in inlines %}
+            {% for fs in formset.forms %}
+            <p>Respuesta: {{ fs.respuesta}}</p>
+            <p>Verdadero: {{ fs.correcto}}</p>
+            <p>Valor: {{ fs.valor}}</p>    
+            {% endfor %}
+            {{ formset.management_form }}
+        {% endfor %}
+
+        
+    <button type="submit">Guardar</button>
+</form>
+    </div>
+</section>
+{% endblock contenido %}

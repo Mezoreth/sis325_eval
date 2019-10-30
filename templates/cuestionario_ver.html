@@ -1,73 +1,35 @@
-{% load staticfiles%}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" type="text/css" href={% static "../static/css/bootstrap.min.css" %}>
-	<script src={% static '../static/js/bootstrap.min.js' %}></script>
-	<script src={ % static '../static/js/jquery.min.js' %}></script>
-</head>
-<body>
-		<!------ Include the above in your HEAD tag ---------->
-		{% block form%}
-		<div class="container contact-form">
-					<div class="contact-image">
-						<img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
-					</div>	
-					<form method="post">
-							{% csrf_token %}
-						<h3>Ver cuestionario</h3>
-					   <div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-										<label><h2>Titulo</h2></label><br>
-										{{cuestionario.id_cuestionario.titulo}}
-                                            
-								</div>
-								<div class="form-group">
-                                        <table class="table">
-                                            <thead class="thead-dark">
-                                              <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">pregunta</th>
-                                                <th scope="col">respuesta</th>
-                                                <th scope="col">Acciones</th>               
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-												{% for preg in preguntas  %}
-                                              <tr>
-                                                <th scope="row"></th>
-                                                <td>{{preg.id_pregunta.texto}}</td>
-												<td>{% for resp in respuestas %}
-													{% if resp.id_pregunta == preg.id_pregunta%}
-													<p>{{resp.texto}}</p>
-													{%endif%}
-													{%empty%}
-													{%endfor%}
-												</td>
-                                                <td><a class="btn btn-danger" href="">Eliminar</a></td>
-                                                <td></td>
-                                              </tr>
-											  {% empty %}
-											  <h4> No hay preguntas Registradas en el cuestionario</h4>
-											  {% endfor %}
-                                            </tbody>
-                                          </table>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-										<label><h2>Materia</h2></label><br>
-										{{cuestionario.id_cuestionario.materia}}
-										
-								</div>
-							</div>
-						</div>
-					</form>			
-		</div>
-		{% endblock %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block contenido %}
+  <section class="bg-light page-section" id="team">
+    <p>Cuestionario: {{ object.titulo}}</p>
+    <p>------Configuracion--------</p>
+    <p>Duracion: {{ object.duracion}}</p>
+    <p>Repeticiones: {{ object.repeticiones}}</p>
+    <p>Ver respuestas correctas: {{ object.ver_r_correctas}}</p>
+    <p>Ver respuestas incorrectas: {{ object.ver_r_incorectas}}</p>
+    <p>Metodo de envio: {{object.envio}}</p>
+    <p>--------Preguntas------------</p>
+      {% for pre in object.preguntacuestionario_set.all %}
+        <p>pregunta : {{pre.id_pregunta.pregunta}}</p>
+        <p>puntaje : {{pre.puntaje}}</p>
+          <p>----------Respuestas---------</p>
+          {% for resp in pre.id_pregunta.respuesta_set.all %}
+          <p>Respuesta: {{resp.respuesta}}</p>
+          {% empty %}
+          <p>No hay respuestas</p>
+          {%endfor%}
+      {% empty %}
+      <p>No hay preguntas</p>
+      {% endfor%}
+  </section>
+
+  <div class="row">
+    <div class="col-lg-3 text-center"></div>
+    <div class="col-lg-3 text-center">
+        <a class="btn btn-success btn-block" href="/pregunta/tipo">Crear y Añadir Nueva Pregunta al Cuestionario</a><br><br>    
+    </div>
+    <div class="col-lg-3 text-center">
+        <a class="btn btn-info btn-block"  href="/cuestionario/ver/añadir/{{object.id}}">Añadir Nueva Pregunta del Banco de Preguntas</a>   
+    </div>
+  </div>    
+  {% endblock contenido %}

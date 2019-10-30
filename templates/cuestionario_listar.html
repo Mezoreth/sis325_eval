@@ -1,52 +1,95 @@
-{% load staticfiles%}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href={% static "../static/css/bootstrap.min.css" %}>
-    <script src={% static '../static/js/bootstrap.min.js' %}></script>
-    <script src={ % static '../static/js/jquery.min.js' %}></script>
-    <title>Lista de Cuestionarios</title>  
-</head>
-<body>
-    {% block form %}
-        <h1> Lista de Cuestionarios</h1>
-            <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Titulo</th>
-                    <th scope="col">Materia</th>
-                    <th scope="col">Acciones</th>               
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for cuest in object_list %}
-                  <tr>
-                    <th scope="row">#</th>
-                    <td>{{ cuest.titulo }}</td>
-                    <td>{{ cuest.materia}}</td>
-                    <td><a class="btn btn-info" href="{% url 'cuestionario_e' cuest.id  %}">Editar</a><a class="btn btn-danger" href="">Eliminar</a><a class="btn btn-info" href="{% url 'cuestionario_v' cuest.id  %}">ver</a></td>
-                    <td></td>
-                  </tr>
-                  {% empty %}
-                  <h1> No hay cuestionarios</h1>
-                  {% endfor %}
-                </tbody>
-              </table>
-    {% endblock %}
-</body>
-</html>
-
-
-
-
-
-
+{% extends "base.html" %}
+{% block titulo %} Lista de cuestionarios {% endblock titulo %}
+{% block contenido %}
+<br>
+<!-- Cuestionarios Grid -->
+  <section class="bg-light page-section" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Cuestionarios</h2>
+          <h3 class="section-subheading text-muted">Una lista de tus cuestionarios.</h3>
+        </div>
+      </div>
+      <div class="row">
+<!------------------------------------------------------------------>
+        {% for cuest in object_list %}
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#a{{cuest.id}}">
+            <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fas fa-plus fa-3x"></i>
+            </div>
+            </div>
+            <img class="img-fluid" src="../static/img/portfolio/cuestionario-bg.png" alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>{{ cuest.titulo }}</h4>
+            <p class="text-muted"></p>
+          </div>
+        </div>
+        {% empty %}
+        <h1> No hay cuestionarios</h1>
+        {% endfor %}   
+      </div>
+    </div>
+  </section>
 
 
 
   
-  
+  <!-- Cuestionarios Modals -->
+  <!-- Modelo 1 -->
+  {% for cuest in object_list %}
+  <div class="portfolio-modal modal fade" id="a{{cuest.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">{{ cuest.titulo }}</h2>
+                  <img class="img-fluid d-block mx-auto" src="../static/img/portfolio/cuestionario-bg.png" alt="">
+                  <h6>Configuraciones</h6>
+                  <ul class="list-inline">
+                    <li>Repeticiones:</li>
+                    <li>{{cuest.repeticiones}}</li>
+                    <li>Ver Respuestas correctas:</li>
+                    <li>{{cuest.ver_r_correctas}}</li>
+                    <li></li>Ver Respuestas Incorrectas:</li>
+                    <li>{{cuest.ver_r_incorectas}}</li>
+                    <li>Metodo de envio:</li>
+                    <li>{{cuest.envio}}</li>
+                  </ul>
+                  <a class="btn btn-info" href="/cuestionario/editar/{{cuest.id}}">Editar</a>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fas fa-times"></i>
+                    Cerrar</button>
+                    <a class="btn btn-danger" href="/cuestionario/eliminar/{{cuest.id}}">Eliminar</a><br><br>
+                    <a class="btn btn-success" href="/cuestionario/ver/{{cuest.id}}">Ver Preguntas Registradas</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <h1> No hay cuestionarios</h1>
+    {% endfor %} 
+  <div class="row">
+    <div class="col-lg-3 text-center"></div>
+      <div class="col-lg-3 text-center">
+        <a class="btn btn-success btn-block" href="/cuestionario/crear">Registrar Nuevo Cuestionario</a><br><br>    
+      </div>
+      <div class="col-lg-3 text-center">
+        <a class="btn btn-info btn-block" href="/pregunta/listar">Ver Banco De Preguntas</a>    
+      </div>
+  </div>
+{% endblock contenido %}

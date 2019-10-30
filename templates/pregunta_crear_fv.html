@@ -1,0 +1,59 @@
+  {% extends "base.html" %}
+  {% block menu%}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Cuestionarios Web</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="cuestionario_pregunta_elegir.html">volver Atras</a>
+              </li>
+  
+          </ul>
+        </div>
+      </div>
+  </nav>
+  {% endblock menu%}
+  {% block contenido %}
+  <section class="bg-light page-section" id="team">
+    <div class="container contact-form">
+ 
+      <form method="post">
+        {% csrf_token %}
+			<br><br><h3>Registrar Pregunta Falso o Verdadero</h3><br><br>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>Pregunta</label><br>
+            {{form2.pregunta}}<br>
+						<label>Materia</label><br>	
+						{{form2.id_materia}}<br>		
+					</div>
+					<div class="form-group">
+						<br>
+						<button type="submit" class="btn btn-success btn-block" >Registrar</button>
+					</div>
+				</div>
+						<div class="col-md-4">
+						<div class="form-group">
+                <label>Respuesta</label><br>
+                {{form.respuesta}}<br>
+							<label>Falso o Verdadero</label><br>
+						  {{form.correcto}}<br>						
+						</div>		
+						</div>
+						<div class="col-md-4">
+							<div class="contact-image">
+								<img src="/../static/img/cohete.png" alt="rocket_contact"/>
+							</div>
+            </div>
+            
+      </div>
+		</form>	
+  </div>
+  </section>
+  {% endblock contenido %}
