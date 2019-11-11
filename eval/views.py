@@ -55,6 +55,12 @@ class EditarCuestionario(UpdateView):
     template_name='cuestionario_editar.html'
     success_url = reverse_lazy('listar_cuestionarios')
 
+class HabilitarCuestionario(UpdateView):
+    model = Cuestionario
+    fields = ['estado','clave']
+    template_name = ''
+    success_url = reverse_lazy('')
+
 class DetalleCuestionario(DetailView):
     model = Cuestionario
     template_name='cuestionario_ver.html'
@@ -217,5 +223,14 @@ class EliminarRespuesta(DeleteView):
     success_url = reverse_lazy('listar_respuesta')
 
 
+# metodo de acceso cuestionario
+def comprobar_password(request, *args, **kwargs):
+    if request.method == 'POST':
+        clave = kwargs['clave']
+        pk = kwargs['pk']
+        cuestionario = Cuestionario.objects.get(pk=pk)
+        if str(cuestionario.clave) == str(clave):
+            return redirect('')
+    return render(request, '')
 
     

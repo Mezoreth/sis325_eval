@@ -11,7 +11,7 @@ class MateriaForm(ModelForm):
 class CuestionarioForm(ModelForm):
     class Meta:
         model = Cuestionario
-        fields = '__all__'
+        fields = ['titulo','duracion','repeticiones','ver_r_correctas','ver_r_incorectas','envio']
         
 class PreguntaFVForm(ModelForm):
     class Meta:

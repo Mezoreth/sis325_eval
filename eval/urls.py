@@ -3,6 +3,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from . import views
+from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('cuestionario/crear', views.CrearCuestionario.as_view(), name='crear_cuestionario'),
@@ -29,9 +30,10 @@ urlpatterns = [
 
     path('pregunta/listar', views.ListarPreguntas.as_view(), name='listar_preguntas'),
     path('pregunta/editar/<int:pk>', views.EditarPregunta.as_view(), name='editar_pregunta'),
-    path('pregunta/detalle/<int:pk>', views.DetallePregunta.as_view(), name= 'detalle_pregunta'),
+    path('pregunta/detalle/<int:pk>', views.DetallePregunta.as_view(), name='detalle_pregunta'),
     path('pregunta/eliminar/<int:pk>', views.EliminarPregunta.as_view(), name='eliminar_pregunta'),
 
-    path('index', views.index, name='index'),
-    path('pregunta/tipo', views.pregunta_tipo, name='tipo_pregunta')
+    path('index/', views.index, name='index'),
+    path('pregunta/tipo', views.pregunta_tipo, name='tipo_pregunta'),
+    path('login/', LoginView.as_view(template_name='login.html') , name='login'),
 ]
