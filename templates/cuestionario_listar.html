@@ -15,7 +15,7 @@
 <!------------------------------------------------------------------>
         {% for cuest in object_list %}
         <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#a{{cuest.id}}">
+          <a class="portfolio-link" data-toggle="modal" href="#a{{cuest.id}}"  id="{{cuest.titulo}}">
             <div class="portfolio-hover">
             <div class="portfolio-hover-content">
               <i class="fas fa-plus fa-3x"></i>
@@ -81,12 +81,12 @@
       </div>
     </div>
     {% empty %}
-    <h1> No hay cuestionarios</h1>
+    <h1> </h1>
     {% endfor %} 
   <div class="row">
     <div class="col-lg-3 text-center"></div>
       <div class="col-lg-3 text-center">
-        <a class="btn btn-success btn-block" href="/cuestionario/crear">Registrar Nuevo Cuestionario</a><br><br>    
+        <a class="btn btn-success btn-block" href="/cuestionario/crear" id="btn_registrar_cuestionario">Registrar Nuevo Cuestionario</a><br><br>    
       </div>
       <div class="col-lg-3 text-center">
         <a class="btn btn-info btn-block" href="/pregunta/listar">Ver Banco De Preguntas</a>    

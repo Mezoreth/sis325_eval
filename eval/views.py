@@ -3,16 +3,20 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from .forms import *
-from .models import Cuestionario, Pregunta, Respuesta,  PreguntaCuestionario, Materia
-from django.views.generic.edit import CreateView, UpdateView , DeleteView
+from .models import Cuestionario, Pregunta, Respuesta, PreguntaCuestionario, Materia, EstudianteCuestionario, PreguntaObtenida, RespuestaElegida, Estudiante, Docente
+from django.views.generic.edit import CreateView, UpdateView ,DeleteView
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-def index(request):
-    return render_to_response('index.html')
+def index_d(request):
+    return render_to_response('index_d.html')
+
+def index_e(request):
+    return render_to_response('index_e.html')
 
 def pregunta_tipo(request):
     return render_to_response('pregunta_elegir.html')
@@ -224,13 +228,73 @@ class EliminarRespuesta(DeleteView):
 
 
 # metodo de acceso cuestionario
-def comprobar_password(request, *args, **kwargs):
-    if request.method == 'POST':
-        clave = kwargs['clave']
-        pk = kwargs['pk']
+def comprobar_clave(request):
+    url = str(reverse_lazy('cuestionarios_disponibles'))
+    if request.method == 'GET':
+        clave = request.GET.get('clave')
+        pk = int(request.GET.get('id'))
+        print(clave)
         cuestionario = Cuestionario.objects.get(pk=pk)
         if str(cuestionario.clave) == str(clave):
-            return redirect('')
-    return render(request, '')
+            url = str(reverse_lazy('examen'))
+            return redirect(url)
+    return redirect(url)
+# metodo de calcular la calificacion
+def calcular_calificacion(id):
+    ecuest = EstudianteCuestionario.objects.get(pk=id)
+    pregunta_obt = PreguntaObtenida.objects.filter(id_ecuestionario__pk=id)
+    puntaje_total = 0
+    for preg in pregunta_obt:
+        respuesta_e = RespuestaElegida.objects.filter(id_preguntao__pk=preg.pk)
+        tipo = preg.id_preguntac.id_pregunta.tipo
+        puntaje_porc = 0
+        puntaje_cuest += preg.id_preguntac.puntaje
+        for resp in respuesta_e:
+            resp_correcta = resp.id_respuesta.correcto
+            # preguntas falso verdadero 
+            if tipo == 'A':
+                if resp.eleccion == resp_correcta:
+                    puntaje_porc = 100
+            # pregunta multiple una sola respuesta
+            elif tipo == 'B':
+                if resp_correcta and resp.eleccion:
+                    puntaje_porc = 100
+            # pregunta multiples respuestas
+            elif  tipo == 'C':
+                if resp_correcta == resp.eleccion:
+                    puntaje_porc += resp.id_respuesta.valor
+        if puntaje_porc > 0:
+            puntaje_cuestionario = preg.id_preguntac.puntaje
+            puntaje_total = (puntaje_cuestionario*puntaje_porc)/100
+            preg.puntaje = puntaje_total
+            preg.save(update_fields=['puntaje'])
+    calificacion = PreguntaObtenida.objects.filter(id_ecuestionario__pk=id).aggregate(Sum('puntaje'))
+    calificacion_total = (calificacion/puntaje_cuest) * 100
+    ecuest.calificacion = calificacion_total
+    ecuest.save(update_fields=['calificacion'])
 
-    
+
+# -------------------------------------Estudiante------------------------------------------------
+class Estudiante_Elegir(TemplateView):
+    template_name = "estudiante_cuestionario_elegir.html"
+
+class Estudiante_ListarCuestionarios_disponibles(ListView): 
+    model = Cuestionario
+    template_name = 'estudiante_listar_cuestionarios.html'
+    queryset = Cuestionario.objects.filter(habilitar=True)
+
+class Estudiante_ListarMaterias(ListView): 
+    model = Materia
+    template_name = 'estudiante_listar_materias.html'
+
+class Estudiante_ExamenHecho(LoginRequiredMixin, ListView): 
+    model = EstudianteCuestionario
+    template_name = 'estudiante_listar_cuestionarios_realizados.html'
+    def get_queryset(self):
+        estudiante = self.request.user
+        object_list = EstudianteCuestionario.objects.filter(id_usuario__id=estudiante.id)
+        return object_list
+
+class Estudiante_Examen(DetailView): 
+    model = Cuestionario
+    template_name = 'estudiante_cuestionario_examen.html'

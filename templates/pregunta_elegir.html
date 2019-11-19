@@ -11,8 +11,8 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);">volver Atras</a>
-					  </li>
+						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
+				</li>
         </ul>
       </div>
     </div>
@@ -21,9 +21,10 @@
 {% block contenido %}
 <section class="bg-light page-section">
 <br>
+<!------------------------->
 <div class="card-group">
 		<div class="card">
-		  <a href="/pregunta/crear/fv" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail" src="../static/img/tipos_preguntas/falso_verdadero.jpg" alt="Card image cap"></a>
+		  <a href="/pregunta/crear/fv" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail" src="../static/img/tipos_preguntas/falso_verdadero.jpg" alt="Card image cap" id="fyv"></a>
 		  <div class="card-body">
 			<h5 class="card-title">Falso o Verdadero</h5>
 			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -35,7 +36,7 @@
 		</div>
 <!------------------------->
 		<div class="card">
-        <a href="/pregunta/crear/mru" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail"  src="../static/img/tipos_preguntas/multiple_opcion.jpg"alt="Card image cap"></a>
+        <a href="/pregunta/crear/mru" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail"  src="../static/img/tipos_preguntas/multiple_opcion.jpg"alt="Card image cap"id="mru"></a>
 		  <div class="card-body">
 			<h5 class="card-title">Opcion Multiple 1</h5>
 			<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
@@ -48,7 +49,7 @@
 		</div>
 <!------------------------->
 		<div class="card">
-        <a href="/pregunta/crear/mrm" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail" href="pregunta_crear.html"  src="../static/img/tipos_preguntas/multiple_opcion2.jpg" alt="Card image cap"></a>
+        <a href="/pregunta/crear/mrm" onmouseover="this.parentNode.style.background='#0f0'" onmouseout="this.parentNode.style.background='#ffffff'"><img class="img-thumbnail" href="pregunta_crear.html"  src="../static/img/tipos_preguntas/multiple_opcion2.jpg" alt="Card image cap" id="mrm"></a>
 		  <div class="card-body">
 			<h5 class="card-title">Opcion Multiple 2</h5>
 			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>

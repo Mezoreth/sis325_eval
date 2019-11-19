@@ -1,0 +1,90 @@
+{% extends "base.html"%}
+{% block menu %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Cuestionarios Web</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/index_e">Inicio</a>
+            </li>
+				<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
+				</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock menu %}
+{% block contenido %}
+
+<!-- Cuestionarios Grid -->
+<section class="bg-light page-section" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Cuestionarios Disponibles</h2>
+          <h3 class="section-subheading text-muted">Una lista de tus cuestionarios Disponibles.</h3>
+        </div>
+      </div>
+      <div class="row">
+<!------------------------------------------------------------------>
+  {% for cuest in object_list %}
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#a{{cuest.id}}"  id="{{cuest.titulo}}">
+            <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fas fa-plus fa-3x"></i>
+            </div>
+            </div>
+            <img class="img-fluid" src="../static/img/tipos_preguntas/cuestionario2.jpg" alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>{{cuest.titulo}}</h4>
+            <p class="text-muted"></p>
+          </div>
+        </div> 
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cuestionarios Modals -->
+  <!-- Modelo 1 -->
+  {% for cuest in object_list %}
+  <div class="portfolio-modal modal fade" id="a{{cuest.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body" style="background-image: url(../static/img/tipos_preguntas/cuestionario2.jpg)">
+                  <h2 class="text-uppercase">{{cuest.titulo}}</h2>
+                  <form action="{% url 'comprobar_clave' %}" method="GET"> 
+                    Clave del cuestionario: <input name="clave" type="text" placeholder="Ingresar clave...">
+                    <input name="id" type="hidden" value="{{cuest.id}}"><br><br>
+                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                      <i class="fas fa-times"></i>
+                      Cerrar</button>
+                    <button type="submit" class="btn btn-success"> Realizar Cuestionario</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+  {% endfor %}
+{% endblock contenido %}

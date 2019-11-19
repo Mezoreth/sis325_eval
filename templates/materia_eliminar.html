@@ -10,7 +10,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);">volver Atras</a>
+						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
 					  </li>
         </ul>
       </div>
@@ -32,7 +32,7 @@
         {% csrf_token %}
             <div class="col-lg-8 mx-auto text-center">
               <p class="large text-muted">Esta Usted Seguro de querer Eliminar la materia {{object.nombre}} ?</p>
-              <button type="submit" class="btn btn-success">Confirmar</button>
+              <button type="submit" class="btn btn-success" id="btn_confirmar">Confirmar</button>
               <a class="btn btn-danger" onClick="javascript:history.go(-1);">Cancelar</a>  
             </div>
     </form>

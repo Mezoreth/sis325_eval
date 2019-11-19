@@ -5,66 +5,51 @@
 <br>
 <br>
 <section class="bg-light page-section" id="preguntas">
-<div class="row">
-    <div class="col-lg-12 text-center">
-      <h2 class="section-heading text-uppercase">Banco de Preguntas Preguntas</h2>
-    </div>
-  </div>
-  <br>
-  <br>
-  <br>
-
-  <div class="row">
-      <div class="col-2"></div>
-      <div class="col-4">
-          <label class="list-group-item list-group-item-info">Preguntas</label>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Banco de Preguntas Preguntas</h2>
+        </div>
       </div>
-      <div class="col-4">
-          <label class="list-group-item list-group-item-info">Respuestas</label>
-      </div>
-      <div class="col-2"></div>
-  </div>
-
-<div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-      <div class="list-group" id="list-tab" role="tablist">
-        
-        {% for pre in object_list %}
-        <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#a{{pre.id}}" role="tab" aria-controls="home">{{ pre.pregunta }}
-          {% for resp in pre.respuesta_set.all %}
-          <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#a{{pre.id}}" role="tab" aria-controls="home">{{ resp.respuesta }} : {{resp.correcto}}</a>
-          {% empty%}
-          <h4> No hay respuestas</h4>
-          {% endfor %}
-          <a class="btn btn-primary" href="/pregunta/editar/{{pre.id}}">Modificar</a></a>
-        {% empty %}
-        <h1> No hay Preguntas Registradas</h1>
-        {% endfor %}
- 
-      </div>
-    </div>
+      <br>
+      <br>
+      <br>
     
-    <div class="col-4">
-      <div class="tab-content" id="nav-tabContent">
-
-        {% for pre in object_list %}
-        <div class="tab-pane fade" id="a{{pre.id}}" role="tabpanel" aria-labelledby="list-home-list"> {{ pre.id_materia.nombre }} </div>
-        {% empty %}
-        <h1> </h1>
-        {% endfor %} 
-    
+      <div class="row">
+          <div class="col-2"></div>
+          <div class="col-7">
+              <label class="list-group-item list-group-item-info">Preguntas</label>
+          </div>
+          <div class="col-2"></div>
       </div>
-    </div>
     
-  </div>
-</section>
-
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <div class="list-group" id="list-tab" role="tablist">
+            
+            {% for pre in object_list %}
+            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#a{{pre.id}}" role="tab" aria-controls="home" name="{{pre.pregunta}}">{{ pre.pregunta }}
+              {% for resp in pre.respuesta_set.all %}
+              <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#a{{pre.id}}" role="tab" aria-controls="home">{{ resp.respuesta }} : {{resp.correcto}}</a>
+              {% empty%}
+              <h4> No hay respuestas</h4>
+              {% endfor %}
+              <a class="btn btn-primary" href="/pregunta/editar/{{pre.id}}" id="ed{{pre.pregunta}}">Modificar</a>
+              <a class="btn btn-danger" href="/pregunta/eliminar/{{pre.id}}"id="el{{pre.pregunta}}">Eliminar</a>
+            {% empty %}
+            <h1> No hay Preguntas Registradas</h1>
+            {% endfor %}
+     
+          </div>
+        </div>
+      </div>
+    </section>
 
 <div class="row">
     <div class="col-lg-4 text-center"></div>
     <div class="col-lg-4 text-center">
-        <a class="btn btn-success btn-block" href="/pregunta/crear">Registrar Nueva Pregunta</a><br><br>    
+        <a class="btn btn-success btn-block" href="/pregunta/crear" id="btn_registrar_pregunta">Registrar Nueva Pregunta</a><br><br>    
     </div>
   </div>    
+
 {% endblock contenido %}

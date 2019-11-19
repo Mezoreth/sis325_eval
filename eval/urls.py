@@ -20,20 +20,25 @@ urlpatterns = [
     path('materia/editar/<int:pk>', views.EditarMateria.as_view(), name='editar_materia'),
     path('materia/eliminar/<int:pk>', views.EliminarMateria.as_view(), name='eliminar_materia'),
 
-
     path('pregunta/crear', views.CrearPregunta.as_view(), name='crear_pregunta'),
-
     path('pregunta/crear/fv', views.CrearPreguntaFV.as_view(), name='crear_pregunta_fv'),
     path('pregunta/crear/mru', views.CrearPreguntaMRU.as_view(), name="crear_pregunta_mru"),
     path('pregunta/crear/mrm', views.CrearPreguntaMRM.as_view(), name="crear_pregunta_mrm"),
-
 
     path('pregunta/listar', views.ListarPreguntas.as_view(), name='listar_preguntas'),
     path('pregunta/editar/<int:pk>', views.EditarPregunta.as_view(), name='editar_pregunta'),
     path('pregunta/detalle/<int:pk>', views.DetallePregunta.as_view(), name='detalle_pregunta'),
     path('pregunta/eliminar/<int:pk>', views.EliminarPregunta.as_view(), name='eliminar_pregunta'),
 
-    path('index/', views.index, name='index'),
+    path('miscuestionarios/elegir', views.Estudiante_Elegir.as_view(), name='estudiante_elegir'),
+    path('miscuestionarios/cuestionarios_disponibles', views.Estudiante_ListarCuestionarios_disponibles.as_view(), name='cuestionarios_disponibles'),
+    path('mismaterias/listar', views.Estudiante_ListarMaterias.as_view(), name='mismaterias'),
+    path('miscuestionarios/examen', views.Estudiante_Examen.as_view(), name='examen'),
+    path('miscuestionarios/hechos', views.Estudiante_ExamenHecho.as_view(), name='examenhecho'),
+    path('miscuestionarios/comprobar', views.comprobar_clave, name="comprobar_clave"),
+
+    path('index_d/', views.index_d, name='index'),
+    path('index_e/', views.index_e, name='index1'),
     path('pregunta/tipo', views.pregunta_tipo, name='tipo_pregunta'),
     path('login/', LoginView.as_view(template_name='login.html') , name='login'),
 ]

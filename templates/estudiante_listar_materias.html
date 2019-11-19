@@ -1,4 +1,23 @@
 {% extends "base.html" %}
+{% block menu %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Cuestionarios Web</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+				<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
+				</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock menu %}
+
 <br>
 {% block contenido %}
 <!-- Cuestionarios Grid -->
@@ -6,14 +25,13 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Materias</h2>
+            <h2 class="section-heading text-uppercase">Mis Materias</h2>
             <h3 class="section-subheading text-muted">Lista de las Materias Registradas.</h3>
           </div>
         </div>
 
         <div class="row">
 <!------------------------------------------------------------------>
-                  {% for mat in object_list %}
                     <div class="col-md-4 col-sm-6 portfolio-item">
                         <a class="portfolio-link" data-toggle="modal" href="#a{{mat.id}}" id="{{mat.nombre}}">
                           <div class="portfolio-hover">
@@ -24,13 +42,10 @@
                           <img class="img-fluid" src="../static/img/portfolio/libros.png" alt="">
                         </a>
                         <div class="portfolio-caption">
-                          <h4>{{ mat.nombre }}</h4>
+                          <h4>Materia</h4>
                           <p class="text-muted"></p>
                         </div>
                       </div>
-                      {% empty %}
-                      <h1> No hay materias registradas</h1>
-                  {% endfor %}
 <!------------------------------------------------------------------>
       </div>
       </div>
@@ -38,7 +53,6 @@
 
   <!-- Cuestionarios Modals -->
   <!-- Modal 1 -->
-  {% for mat in object_list %}
   <div class="portfolio-modal modal fade" id="a{{mat.id}}" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -53,14 +67,12 @@
                 <div class="modal-body">
                   <!-- Project Details Go Here -->
                   <h2 class="text-uppercase"></h2>
-                  <p class="item-intro text-muted"><h5>Materia: {{mat.nombre}}</h5>.</p>
-                  <p class="item-intro text-muted"><h6>Sigla: {{mat.sigla}}</h6>.</p>
+                  <p class="item-intro text-muted"><h5>Materia: </h5>.</p>
+                  <p class="item-intro text-muted"><h6>Sigla: </h6>.</p>
                   <img class="img-fluid d-block mx-auto" src="../static/img/portfolio/libros.png" alt="">
-                  <a class="btn btn-info" href="/materia/editar/{{mat.id}}">Editar</a>
                   <button class="btn btn-primary" data-dismiss="modal" type="button">
                     <i class="fas fa-times"></i>
                     Cerrar</button>
-                    <a class="btn btn-danger" href="/materia/eliminar/{{mat.id}}">Eliminar</a><br><br>
 
                 </div>
               </div>
@@ -69,14 +81,10 @@
         </div>
       </div>
     </div>
-    {% empty %}
-    <h1></h1>
-    {% endfor %} 
 <!------------------------------------------------------------------------------------------------------------------------>
 <div class="row">
     <div class="col-lg-4 text-center"></div>
     <div class="col-lg-4 text-center">
-        <a class="btn btn-success btn-block" href="/materia/crear" id="btn_registrar_materia">Registrar Nueva Materia</a><br><br>    
     </div>
   </div>
   
