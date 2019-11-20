@@ -12,8 +12,12 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
 				<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="/index_d">Inicio</a>
+					  </li>
+				<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
 				</li>
+				
         </ul>
       </div>
     </div>
@@ -29,11 +33,16 @@
 		<div class="container contact-form">
 				<form method="POST">
 						{% csrf_token %}
-						<p>Pregunta : {{ form.pregunta }}</p>
-						<p>Tipo : {{ form.tipo }}</p>
 						<p>Materia : {{ form.id_materia }}</p>
-						
-						<br><br><br>
+						{% if form.tipo.value == 'A' %}
+						<p>Tipo : Falso/Verdadero </p>
+						{% elif form.tipo.value == 'B' %}
+						<p>Tipo : Multiple opcion una respuesta </p>
+						{% elif form.tipo.value == 'C' %}
+						<p>Tipo : Multiple opcion varias respuestas </p>
+						{%endif%}
+						<p>Pregunta : {{ form.pregunta }}</p>
+						<br>
 						{{ inlines.management_form }}
 						
 						{% for formset in inlines %}
@@ -56,7 +65,7 @@
 						{% endfor %}
 				
 						
-						<button type="submit" class="btn btn-success btn-block" id="btn_guardar">Registrar</button>
+						<button type="submit" class="btn btn-success btn-block" id="btn_guardar">Guardar</button>
 				</form>
 					</div>
 		</div>

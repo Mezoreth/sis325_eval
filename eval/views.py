@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout
 # Create your views here.
 
 def index_d(request):
@@ -20,6 +21,10 @@ def index_e(request):
 
 def pregunta_tipo(request):
     return render_to_response('pregunta_elegir.html')
+
+def logout_vista(request):
+    logout(request)
+    return redirect(reverse_lazy('index_e'))
 
 #####################################################    Materias
 class ListarMaterias(ListView):
@@ -38,10 +43,13 @@ class EditarMateria(UpdateView):
     template_name = 'materia_editar.html'
     success_url = reverse_lazy('listar_materias')
 
-class EliminarMateria(DeleteView):
-    model = Materia
-    template_name='materia_eliminar.html'
-    success_url = reverse_lazy('listar_materias')
+def EliminarMateria(request, pk):
+    try:
+        materia = Materia.objects.get(pk=pk)
+        materia.delete()
+        return redirect(reverse_lazy('listar_materias'))
+    except:
+        return redirect(reverse_lazy('listar_materias'))
 
 #####################################################    Cuestionarios
 class CrearCuestionario(CreateView):
@@ -61,18 +69,21 @@ class EditarCuestionario(UpdateView):
 
 class HabilitarCuestionario(UpdateView):
     model = Cuestionario
-    fields = ['estado','clave']
-    template_name = ''
-    success_url = reverse_lazy('')
+    fields = ['habilitar','clave']
+    template_name = 'cuestionario_habilitar.html'
+    success_url = reverse_lazy('listar_cuestionarios')
 
 class DetalleCuestionario(DetailView):
     model = Cuestionario
     template_name='cuestionario_ver.html'
     
-class EliminarCuestionario(DeleteView):
-    model = Cuestionario
-    template_name='cuestionario_eliminar.html'
-    success_url = reverse_lazy('listar_cuestionarios')
+def EliminarCuestionario(request, pk):
+    try:
+        cuestionario = Cuestionario.objects.get(pk=pk)
+        cuestionario.delete()
+        return redirect(reverse_lazy('listar_cuestionarios'))
+    except:
+        return redirect(reverse_lazy('listar_cuestionarios'))
 
 class AñadirPreguntaCuestionario(ListView):
     model = Pregunta
@@ -96,6 +107,26 @@ def crear_pregunta_cuestionario(*args, **kwargs):
     except:
         pass
     return redirect(cuestionario.get_absolute_url())
+
+def cambiar_puntaje(request, pkc, pkp):
+    if request.method == 'POST':
+        url = '/cuestionario/ver/%d'%pkc
+        try:
+            preguntac = PreguntaCuestionario.objects.get(pk=pkp , id_cuestionario__pk=pkc)
+            preguntac.puntaje = int(request.POST.get('puntaje','10'))
+            preguntac.save(update_fields=['puntaje'])
+            return redirect(url)
+        except:
+            return redirect(url)
+
+def eliminar_pregunta_cuestionario(request, pkc, pkp):
+    url = '/cuestionario/ver/%d'%pkc
+    try:
+        preguntac = PreguntaCuestionario.objects.get(pk=pkp , id_cuestionario__pk=pkc)
+        preguntac.delete()
+        return redirect(url)
+    except:
+        return redirect(url)
 ####################################################  Preguntas
 
 
@@ -140,6 +171,7 @@ class RespuestaMRUV(InlineFormSetFactory):
 
 class RespuestaMRUF(InlineFormSetFactory):
     model = Respuesta
+    form_class = RespuestaForm
     fields = ['respuesta']
     prefix = 'respf'
     factory_kwargs = {'extra': 6, 'max_num': 6,
@@ -158,6 +190,7 @@ class CrearPreguntaMRU(CreateWithInlinesView):
 
 class RespuestaMRM(InlineFormSetFactory):
     model = Respuesta
+    form_class = RespuestaForm
     fields = ['respuesta','correcto','valor']
     factory_kwargs = {'extra': 5, 'max_num': 7,
                       'can_order': False, 'can_delete': False}
@@ -278,7 +311,7 @@ def calcular_calificacion(id):
 class Estudiante_Elegir(TemplateView):
     template_name = "estudiante_cuestionario_elegir.html"
 
-class Estudiante_ListarCuestionarios_disponibles(ListView): 
+class Estudiante_ListarCuestionarios_disponibles(LoginRequiredMixin,ListView): 
     model = Cuestionario
     template_name = 'estudiante_listar_cuestionarios.html'
     queryset = Cuestionario.objects.filter(habilitar=True)

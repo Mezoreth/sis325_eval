@@ -68,10 +68,8 @@
                     <li>{{cuest.envio}}</li>
                   </ul>
                   <a class="btn btn-info" href="/cuestionario/editar/{{cuest.id}}">Editar</a>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fas fa-times"></i>
-                    Cerrar</button>
-                    <a class="btn btn-danger" href="/cuestionario/eliminar/{{cuest.id}}">Eliminar</a><br><br>
+                    <a class="btn btn-primary" href="/cuestionario/habilitar/{{cuest.id}}">Habilitar</a>
+                    <a class="btn btn-danger" href="/cuestionario/eliminar/{{cuest.id}}" onclick="return confirm('Seguro que desea eliminar {{cuest.titulo}}');">Eliminar</a><br><br>
                     <a class="btn btn-success" href="/cuestionario/ver/{{cuest.id}}">Ver Preguntas Registradas</a>
                 </div>
               </div>

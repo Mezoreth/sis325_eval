@@ -11,18 +11,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/logout" id="cuestionario">Logout</a>
+              </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/login" id="cuestionario">{{user.get_username}}</a>
+              </li>
+            {%endif%}  
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="/miscuestionarios/elegir" id="cuestionario">Mis Cuestionarios</a>
               </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/mismaterias/listar" id="pregunta">Mis Materias</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#" id="materia"></a>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#">Equipo</a>
-          </li>
         </ul>
       </div>
     </div>
@@ -35,7 +35,8 @@
       <div class="intro-text">
         <div class="intro-lead-in">Bienvenido a tu plataforma de cuestionarios!</div>
         <div class="intro-heading text-uppercase">Un lugar de examenes</div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Estudiante</a>
+        <div class="intro-lead-in">Zona estudiante</div>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="/index_d">Docente</a>
       </div>
     </div>
   </header>

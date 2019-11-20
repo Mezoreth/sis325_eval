@@ -9,6 +9,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="/index_d">Inicio</a>
+                </li>
           <li class="nav-item">
               <a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
               </li>
@@ -25,19 +28,17 @@
             <br>  
 <form method="POST">
         {% csrf_token %}
-        
+        <p>Materia : {{ form.id_materia }}</p>
         <p>Pregunta : {{ form.pregunta }}</p>
         <p>Tipo : {{ form.tipo }}</p>
-        <p>Materia : {{ form.id_materia }}</p>
-        
-        <br><br><br>
+        <br>
         {{ inlines.management_form }}
         
         {% for formset in inlines %}
             {% for fs in formset.forms %}
             <p>Respuesta: {{ fs.respuesta}}</p>
-            <p>Verdadero: {{ fs.correcto}}</p>
-            <p>Valor: {{ fs.valor}}</p>    
+            <p>Verdadero: {{ fs.correcto}}&nbsp&nbsp Valor: {{ fs.valor}}</p>
+            <p></p>    
             {% endfor %}
             {{ formset.management_form }}
         {% endfor %}

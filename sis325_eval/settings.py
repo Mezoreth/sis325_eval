@@ -118,8 +118,8 @@ USE_TZ = True
 
 #Auth urls
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL= '/index/'
-LOGOUT_REDIRECT_URL= '/login/'
+LOGIN_REDIRECT_URL= '/index_e/'
+LOGOUT_REDIRECT_URL= '/login_e/'
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'

@@ -10,7 +10,12 @@
             <h3 class="section-subheading text-muted">Lista de las Materias Registradas.</h3>
           </div>
         </div>
-
+        <div class="row">
+            <div class="col-lg-4 text-center"></div>
+            <div class="col-lg-4 text-center">
+                <a class="btn btn-success btn-block" href="/materia/crear" id="btn_registrar_materia">Registrar Nueva Materia</a><br><br>    
+            </div>
+          </div>
         <div class="row">
 <!------------------------------------------------------------------>
                   {% for mat in object_list %}
@@ -53,14 +58,14 @@
                 <div class="modal-body">
                   <!-- Project Details Go Here -->
                   <h2 class="text-uppercase"></h2>
-                  <p class="item-intro text-muted"><h5>Materia: {{mat.nombre}}</h5>.</p>
-                  <p class="item-intro text-muted"><h6>Sigla: {{mat.sigla}}</h6>.</p>
+                  <p class="item-intro text-muted"><h5>Materia: {{mat.nombre}}</h5></p>
+                  <p class="item-intro text-muted"><h6>Sigla: {{mat.sigla}}</h6></p>
                   <img class="img-fluid d-block mx-auto" src="../static/img/portfolio/libros.png" alt="">
                   <a class="btn btn-info" href="/materia/editar/{{mat.id}}">Editar</a>
                   <button class="btn btn-primary" data-dismiss="modal" type="button">
                     <i class="fas fa-times"></i>
                     Cerrar</button>
-                    <a class="btn btn-danger" href="/materia/eliminar/{{mat.id}}">Eliminar</a><br><br>
+                    <a class="btn btn-danger" href="/materia/eliminar/{{mat.id}}" onclick="return confirm('Seguro que desea eliminar la materia?');">Eliminar</a><br><br>
 
                 </div>
               </div>
@@ -73,11 +78,6 @@
     <h1></h1>
     {% endfor %} 
 <!------------------------------------------------------------------------------------------------------------------------>
-<div class="row">
-    <div class="col-lg-4 text-center"></div>
-    <div class="col-lg-4 text-center">
-        <a class="btn btn-success btn-block" href="/materia/crear" id="btn_registrar_materia">Registrar Nueva Materia</a><br><br>    
-    </div>
-  </div>
+
   
 {% endblock contenido %}

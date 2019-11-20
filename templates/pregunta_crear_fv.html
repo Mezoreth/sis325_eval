@@ -9,6 +9,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="/index_d">Inicio</a>
+                </li>
           <li class="nav-item">
               <a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
               </li>
@@ -28,10 +31,14 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">
+            <label>Materia</label><br>	
+            {{form2.id_materia}}<br>
 						<label>Pregunta</label><br>
             {{form2.pregunta}}<br>
-						<label>Materia</label><br>	
-						{{form2.id_materia}}<br>		
+            <label>Pregunta</label><br>
+            {{form.respuesta}}<br>
+						<label>Falso o Verdadero</label><br>
+						{{form.correcto}}<br>		
 					</div>
 					<div class="form-group">
 						<br>
@@ -40,10 +47,7 @@
 				</div>
 						<div class="col-md-4">
 						<div class="form-group">
-                <label>Respuesta</label><br>
-                {{form.respuesta}}<br>
-							<label>Falso o Verdadero</label><br>
-						  {{form.correcto}}<br>						
+                						
 						</div>		
 						</div>
 						<div class="col-md-4">

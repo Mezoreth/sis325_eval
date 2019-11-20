@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
 class Cuestionario(models.Model):
-    titulo = models.CharField(max_length=50, null=False, blank=False)
+    titulo = models.CharField(max_length=75, null=False, blank=False, unique=True)
     duracion = models.PositiveSmallIntegerField(default=60)
     repeticiones = models.PositiveSmallIntegerField(default=1)
     ver_r_correctas = models.BooleanField(default=False)
@@ -18,13 +18,13 @@ class Cuestionario(models.Model):
         return reverse('detalle_cuestionario', kwargs={'pk': self.pk})
 
 class Materia(models.Model):
-    nombre = models.CharField(max_length=50, unique= True)
+    nombre = models.CharField(max_length=75, unique= True)
     sigla = models.CharField(max_length=7, unique= True)
     def __str__(self):
         return self.nombre
 
 class Pregunta(models.Model):
-    pregunta = models.CharField(max_length=50, null=False, blank=False)
+    pregunta = models.CharField(max_length=100, null=False, blank=False)
     tipos = (('A','Falso y Verdadero'),('B','Multiple Opcion 1 Respuetsa'),('C','Multiple Opcion Multiple Respuesta'))
     tipo = models.CharField(max_length=45, choices=tipos, null=False, blank=False)
     id_materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
@@ -34,7 +34,7 @@ class Pregunta(models.Model):
         return reverse('detalle_pregunta', kwargs={'pk': self.pk})
 
 class Respuesta(models.Model):
-    respuesta = models.CharField(max_length=50, null=False, blank= False)
+    respuesta = models.CharField(max_length=100, null=False, blank= False)
     correcto = models.BooleanField(default=False)
     valor = models.FloatField(null=True, blank=True)
     id_pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, null=True, blank=True)
