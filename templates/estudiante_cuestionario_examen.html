@@ -9,9 +9,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/index_e">Inicio</a>
-              </li>
 				<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" onClick="javascript:history.go(-1);" href="#">Volver Atras</a>
 				</li>
@@ -21,15 +18,130 @@
   </nav>
 {% endblock menu %}
 {% block contenido %}
+<form name="counter"><input type="text" size="8" 
+  name="d2"></form> 
+  
+  <script> 
+ // <!-- 
+  // 
+   var milisec=0; 
+   //var seconds={{time}}; 
+   //document.counter.d2.value={{time}}; 
+  
+  
+  
+  function display()
+  { 
+   if (milisec<=0){ 
+      milisec=9 
+      seconds-=1 
+   } 
+   if (seconds<=-1){ 
+      milisec=0 
+      seconds+=1 
+   } 
+   else 
+      milisec-=1 
+      document.counter.d2.value=seconds+"."+milisec 
+      setTimeout("display()",1000) 
+  } 
+  display() 
+  //-->
+  </script>
+
 <br>
-<br>
-<br>
-<br>
-<h1>Examen</h1>
+<section class="bg-light page-section" id="portfolio">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">{{object.titulo}}</h2><br><br>
+      </div>
+    </div>
+    <div class="row">
+<!------------------------------------------------------------------>
+        
+        {% for pre in object.preguntacuestionario_set.all %}
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#a{{forloop.counter}}"  id="{{pre.id_pregunta}}">
+            <div class="portfolio-hover">
+            <div class="portfolio-hover-content">
+              <i class="fas fa-plus fa-3x"></i>
+            </div>
+            </div>
+            <img class="img-fluid" src="../../static/img/portfolio/question.png" alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>{{ pre.id_pregunta }}</h4>
+            <p class="text-muted"></p>
+          </div>
+        </div>
+        {% empty %}
+        <h1> No hay preguntas</h1>
+       
+        {% endfor %}   
+      </div>
+    </div>
+  </section>
 
 
 
-
-
-
+  
+  <!-- Examen Modals -->
+  <!-- Modelo 1 -->
+  
+  {% for pre in object.preguntacuestionario_set.all %}
+  <div class="portfolio-modal modal fade" id="a{{forloop.counter}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">{{ cuest.titulo }}</h2>
+                  <img class="img-fluid d-block mx-auto" src="../static/img/portfolio/cuestionario-bg.png" alt="">
+                  <h6>{{pre.id_pregunta.pregunta}}</h6>
+                  <ul class="list-inline">
+                      {% if pre.id_pregunta.tipo == "C" %}
+                      {% for resp in pre.id_pregunta.respuesta_set.all %}
+                      <p><input type="checkbox" id="{{resp.respuesta}}"name = "{{resp.respuesta}}" value = "{{resp.respuesta}}"  >{{resp.respuesta}}</p>
+                      {%endfor%}
+                      {% elif pre.id_pregunta.tipo != "C" %}
+                      {% for resp in pre.id_pregunta.respuesta_set.all %}
+                      <p><input type="radio" id="{{resp.respuesta}}"name = "{{pre.id_pregunta.pregunta}}" value = "{{resp.respuesta}}"  >{{resp.respuesta}}</p>
+                      {% endfor %}
+                      {% else %}
+                      <p>No hay respuestas</p>
+                      
+                    {% endif %}
+                  </ul>
+                  <a class="btn btn-info" href="#a{{forloop.counter0}}">Anterior</a>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fas fa-times"></i>
+                    Cerrar</button>
+                    <a class="btn btn-danger" href="#a{{forloop.counter}}">Siguiente</a><br><br>
+                    <a class="btn btn-success" href="/cuestionario/ver/{{cuest.id}}">Guardar respuesta</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <h1> </h1>
+    {% endfor %} 
+  <div class="row">
+    <div class="col-lg-2 text-center"></div>
+    <div class="col-lg-3 text-center"></div>
+      <div class="col-lg-2 text-center">
+        <a class="btn btn-success btn-block" href="/cuestionario/crear" id="btn_registrar_cuestionario">Terminar intento</a><br><br>    
+      </div>
+  </div>
+  
 {% endblock contenido %}
